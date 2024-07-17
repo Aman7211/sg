@@ -9,7 +9,7 @@ import axios from 'axios';
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 ChartJS.register(ArcElement, Tooltip, Legend);
 const Home = () => {
-
+ 
     const [employees, setEmployees] = useState([]);
     const data1 = [
         {
@@ -83,8 +83,8 @@ const Home = () => {
     const fetchData = async () => {
         try {
             const response = await axios.get('http://localhost:4000/api/v1/employee/getall');
-            console.log(response.data.employee);
-            setEmployees(response.data.employee.slice(0, 5));
+            console.log(response.data.employees);
+            setEmployees(response.data.employees.slice(0, 5));
         } catch (error) {
             console.log(error);
         }
@@ -93,6 +93,8 @@ const Home = () => {
     useEffect(() => {
         fetchData();
     }, []);
+
+    const role = localStorage.getItem('role');
 
     return (
         <>
@@ -115,7 +117,8 @@ const Home = () => {
             <div className='w-[80%] mx-auto'>
                 <Bar data={data2} options={options} />
             </div>
-
+{role === 'admin'?(
+    <>
             <div>
                 <h1 className='flex justify-center text-2xl mt-16 my-5 font-bold '>Our Recent Employees</h1>
             </div>
@@ -138,7 +141,8 @@ const Home = () => {
                         ))}
                     </tbody>
                 </table>
-            </div>
+            </div></>
+            ):(<div></div>)}
         </>
     );
 };

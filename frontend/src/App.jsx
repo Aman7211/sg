@@ -20,31 +20,44 @@ import Editproduct from './components/Editproduct'
 
 function App() {
   const token = localStorage.getItem('token');
+  const role = localStorage.getItem('role');
   console.log(token);
 
   return (
     <div className="flex">
       <Sidebar />
-      <div className=" ml-64 mt-3">
+      <div className="lg:ml-64 mt-3">
       <Routes>
         {token ? (
         <Route path='/' element={<Home/>}/>
       ):( <Route path='/' element={<CustomerHome/>} />)}
-        <Route path='/products' element={<Product/>}/>
-        <Route path='/services' element={<Services/>}/>
-        <Route path='/admin' element={<Admin/>}/>
+
+      {role==='admin' ? (
+        <>
+       <Route path='/employee/register' element={<Employeeregister/>} />
+       <Route path='/admin/register' element={<Adminregister/>} />
+       <Route path='/addproducts' element={<Addproduct/>} />
+       <Route path="/employeeview/:id" element={<Employeedetail/>} />
+       <Route path='/employeeedit/:id' element={<Editemployee/>} />
+       <Route path='/adminview/:id' element={<Admindetail/>} />
+       <Route path='/productview/:id' element={<Productdetail/>} />
+       <Route path='/editadmin/:id' element={<Editadmin/>} />
+       <Route path='/bill/preview' element={<Bill/>}/>
+       <Route path='/editproduct/:id'  element={<Editproduct/>}/>
+       <Route path='/products' element={<Product/>}/>
         <Route path='/bill' element={<Bill/>}/>
         <Route path='/login' element={<Login/>}/>
-        <Route path='/employee/register' element={<Employeeregister/>} />
-        <Route path='/admin/register' element={<Adminregister/>} />
-        <Route path='/addproducts' element={<Addproduct/>} />
-        <Route path="/employeeview/:id" element={<Employeedetail/>} />
-        <Route path='/employeeedit/:id' element={<Editemployee/>} />
-        <Route path='/adminview/:id' element={<Admindetail/>} />
-        <Route path='/productview/:id' element={<Productdetail/>} />
-        <Route path='/editadmin/:id' element={<Editadmin/>} />
-        <Route path='/bill/preview' element={<Bill/>}/>
-        <Route path='/editproduct/:id'  element={<Editproduct/>}/>
+        <Route path='/services' element={<Services/>}/>
+        <Route path='/admin' element={<Admin/>}/>
+       </>
+
+      ):(<> <Route path='/products' element={<Product/>}/>
+        <Route path='/bill' element={<Bill/>}/>
+        <Route path='/login' element={<Login/>}/>
+        </>
+      )}
+       
+        
       
         {/* <Route path='/contact' element={<Contact/>}/> */}
 

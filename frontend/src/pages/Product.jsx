@@ -73,7 +73,7 @@ const Product = () => {
       toast.error("Failed to delete employee. Please try again.");
     }
   };
-
+  const role = localStorage.getItem('role');
 
   return (
     <div className="w-full p-4 overflow-x-auto">
@@ -117,10 +117,9 @@ const Product = () => {
                   >
                     View
                   </a>
-                  <a
-                   
-                   
-                  >
+                  {role === 'admin' ? (
+                    <>
+                  <a>
                    <button  onClick={(e) => {
                       e.preventDefault();
                       deleteProduct(product._id);
@@ -136,7 +135,8 @@ const Product = () => {
                     className="rounded bg-red-700 px-4 py-2 text-xs font-medium text-white hover:bg-red-600"
                   >
                     Update
-                  </a>
+                  </a></>
+                  ):(<div></div>)}
                 </td>
               </tr>
             ))}
@@ -153,7 +153,7 @@ const Product = () => {
         </button>
         <span className="text-sm text-gray-700">Page {currentPage} of {totalPages}</span>
         <button
-          className="inline-block rounded bg-gray-700 px-4 py-2 text-xs font-medium text-white hover:bg-gray-600"
+          className="inline-block rounded bg-gray-700 px-4 py-2 text-xs focnt-medium text-white hover:bg-gray-600"
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
         >

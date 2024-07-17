@@ -26,14 +26,12 @@ function Employeeregister() {
     e.preventDefault();
 
     const { name, email, phone, password, address, role } = inpval;
-    const adminToken = localStorage.getItem('adminToken'); // Retrieve adminToken correctly
 
     try {
         const res = await fetch("http://localhost:4000/api/v1/employee/register", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${adminToken}`,
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 name,

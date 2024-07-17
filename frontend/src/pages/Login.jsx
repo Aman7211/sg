@@ -38,13 +38,15 @@ const Login = () => {
             const data = await response.json();
             console.log('Success:', data);
             
-            localStorage.setItem("token", data.adminObj.token);
+       
             if (credential.role === "admin") {
                 localStorage.setItem('name', data.adminObj.name);
-                localStorage.setItem('role', "admin");
+                localStorage.setItem('role', "admin");   
+                 localStorage.setItem("token", data.adminObj.token);
             } else {
-                localStorage.setItem('name', data.employeeObj.name);
+                localStorage.setItem('name', data.employee.name);
                 localStorage.setItem('role', "employee");
+                localStorage.setItem("token", data.token);
             }
             toast.success("User successfully signed in");
             navigate('/');

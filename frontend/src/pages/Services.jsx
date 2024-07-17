@@ -37,8 +37,8 @@ const Services = () => {
       console.log('Response data:', data);
   
       // Ensure 'employee' key exists and contains an array
-      if (Array.isArray(data.employee)) {
-        setUserdata(data.employee);
+      if (Array.isArray(data.employees)) {
+        setUserdata(data.employees);
       } else {
         toast.error("Invalid data received from server.");
       }

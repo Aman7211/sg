@@ -22,15 +22,10 @@ export const register = async (req, res, next) => {
 
     const employee = await Employee.create({ name, email, phone, password: hashedPassword, address, role });
 
-    const token = jwt.sign({ id: employee._id }, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRES,
-    });
-
     res.status(200).json({
         success: true,
-        message: "Employee  registered!",
-        employee,
-        token
+        message: "Employee registered!",
+        employee
     });
 };
 
@@ -70,19 +65,16 @@ export const login = async (req, res, next) => {
         expiresIn: process.env.JWT_EXPIRES
     });
     
-    res.status(200).cookie("employeeToken", token, {
-        httpOnly: true,
-        expires: new Date(Date.now() + process.env.COOKIE_EXPIRES * 24 * 60 * 60 * 1000)
-    }).json({
+    res.status(200).json({
         success: true,
-        message: "Employee logged in ",
+        message: "Employee logged in",
         employee,
         token
     });
 };
 
 export const getEmployee = async (req, res, next) => {
-    const {id} = req.params
+    const { id } = req.params;
     const employee = await Employee.findById(id);
     if (!employee) {
         return res.status(404).json({
@@ -96,13 +88,12 @@ export const getEmployee = async (req, res, next) => {
     });
 };
 
-
 export const getallEmployee = async (req, res) => {
     try {
-        const employee = await Employee.find();
+        const employees = await Employee.find();
         res.status(200).json({
             success: true,
-           employee
+            employees
         });
     } catch (error) {
         res.status(500).json({
@@ -112,32 +103,29 @@ export const getallEmployee = async (req, res) => {
     }
 };
 
-
-
-export const deleteEmployee  = async(req,res,next)=>{
-    const {id} = req.params;
+export const deleteEmployee = async (req, res, next) => {
+    const { id } = req.params;
     try {
         await Employee.findByIdAndDelete(id);
         res.status(200).json({ success: true, message: 'Employee deleted!' });
-      } catch (error) {
+    } catch (error) {
         res.status(500).json({ success: false, message: 'Internal server error' });
-      }
-}
-
+    }
+};
 
 export const updateEmployee = async (req, res, next) => {
     const { id } = req.params;
-    const {name , email , phone , password , address } = req.body;
+    const { name, email, phone, password, address } = req.body;
 
     try {
         const updatedEmployee = await Employee.findByIdAndUpdate(
             id,
-            { name , email , phone , password , address },
+            { name, email, phone, password, address },
             { new: true }
         );
         res.status(200).json({
             success: true,
-            message: 'Employee  updated!',
+            message: 'Employee updated!',
             employee: updatedEmployee
         });
     } catch (error) {

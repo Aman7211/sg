@@ -9,7 +9,7 @@ const Bill = () => {
   const [selectedBill, setSelectedBill] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const productsPerPage = 20;
-
+  const role = localStorage.getItem('role');
   const totalPages = Math.ceil(getuserdata.length / productsPerPage);
 
   const handlePrevPage = () => {
@@ -119,6 +119,8 @@ const Bill = () => {
                     >
                       View
                     </button>
+
+                    {role==='admin'?(
                     <button className="rounded bg-red-700 px-4 py-2 text-xs font-medium text-white hover:bg-red-600"
                       onClick={(e) => {
                         e.preventDefault();
@@ -127,6 +129,7 @@ const Bill = () => {
                     >
                       Delete
                     </button>
+                    ):(<div></div>)}
                   </td>
                 </tr>
               ))}
